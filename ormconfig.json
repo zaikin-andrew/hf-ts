@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "nest",
+  "password": "nest",
+  "database": "nest_hirefy",
+  "entities": ["src/models/*.entity{.ts,.js}"],
+  "synchronize": true
+}
