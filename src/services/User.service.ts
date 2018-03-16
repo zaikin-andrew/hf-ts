@@ -11,7 +11,7 @@ export class UserService extends BaseService {
     return this.model.find(options);
   }
 
-  findOne(options = {}) {
+  findOne(options = {}): Promise<User> {
     return this.model.findOne(options);
   }
 
