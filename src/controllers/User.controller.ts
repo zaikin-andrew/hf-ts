@@ -1,4 +1,4 @@
-import { Authorized, Body, Get, JsonController, Param, Post } from 'routing-controllers';
+import { Authorized, Body, CurrentUser, Get, JsonController, Param, Post } from 'routing-controllers';
 import { User } from '../models';
 import { UserService } from '../services';
 
@@ -14,7 +14,7 @@ export class UserController {
   }
   @Authorized()
   @Get('/')
-  find(): Promise<User[]> {
+  find(@CurrentUser() user?: User): Promise<User[]> {
     return this.userService.find();
   }
 

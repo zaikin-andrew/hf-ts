@@ -15,23 +15,17 @@ routingUseContainer(Container);
 // createConnection method will automatically read connection options from your ormconfig file
 createConnection().then((connection: Connection) => {
 
-  /**
-   * We create a new express server instance.
-   * We could have also use useExpressServer here to attach controllers to an existing express instance.
-   */
   const expressApp = createExpressServer({
     authorizationChecker: (action: Action, roles: string[]) => {
       return new Promise((resolve, reject) => {
         passport.authenticate('jwt', (error, user, info) => {
           if (error || !user) return reject(error);
+          action.request.user = user;
           resolve(true);
         })(action.request, action.response, action.next);
       })
     },
-    /**
-     * We can add options about how routing-controllers should configure itself.
-     * Here we specify what controllers should be registered in our express server.
-     */
+    currentUserChecker: (action: Action) => action.request.user,
     controllers: [__dirname + '/controllers/*.controller.ts'],
   });
 
