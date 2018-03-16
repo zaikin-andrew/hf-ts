@@ -1,10 +1,9 @@
 import { Service } from 'typedi';
 import { messages } from '../managers';
 import { User } from '../models';
-import { BaseService } from './service.base';
 
 @Service()
-export class UserService extends BaseService {
+export class UserService {
   protected model = User;
 
   find(options = {}): Promise<User[]> {

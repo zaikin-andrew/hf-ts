@@ -1,6 +1,10 @@
 import * as bcrypt from 'bcrypt-nodejs';
-import { Index, Entity, Column, BeforeInsert } from 'typeorm';
+import { BeforeInsert, Column, Entity, Index, ManyToOne, OneToMany } from 'typeorm';
+import { Customer } from './Customer.entity';
+import { Log } from './Log.entity';
 import { BaseModel } from './model.base';
+import { Note } from './Note.entity';
+import { Rating } from './Rating.entity';
 
 export enum UserTypes {
   admin   = 'admin',
@@ -33,8 +37,17 @@ export class User extends BaseModel {
   })
   type: string;
 
-  @Column()
-  customer: number;
+  @OneToMany(type => Log, d => d.user)
+  logs: Log[];
+
+  @OneToMany(type => Note, d => d.user)
+  notes: Note[];
+
+  @OneToMany(type => Rating, d => d.user)
+  ratings: Rating[];
+
+  @ManyToOne(type => Customer, d => d.users)
+  customer: Customer;
 
   @BeforeInsert()
   hashPassword() {

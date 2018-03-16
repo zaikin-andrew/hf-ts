@@ -1,10 +1,9 @@
 import { Service } from 'typedi';
 import { messages } from '../managers';
 import { Job } from '../models';
-import { BaseService } from './service.base';
 
 @Service()
-export class JobService extends BaseService {
+export class JobService {
   protected model = Job;
 
 }

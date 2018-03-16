@@ -1,5 +1,7 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { BaseModel } from './model.base';
+import { Response } from './Response.entity';
+import { User } from './User.entity';
 
 export enum Actions {
   auth = 'auth',
@@ -14,9 +16,8 @@ export enum Pages {
 @Entity('logs')
 export class Log extends BaseModel {
 
-  @Index()
-  @Column({ nullable: true })
-  user: number;
+  @OneToMany(type => User, d => d.logs)
+  user: User;
 
   @Column('enum', { enum: Actions, default: Actions.read })
   action: string;

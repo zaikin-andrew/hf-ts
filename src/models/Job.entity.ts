@@ -1,5 +1,8 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, OneToMany } from 'typeorm';
+import { CandidateResponse } from './CandidateResponse.entity';
+import { Customer } from './Customer.entity';
 import { BaseModel } from './model.base';
+import { Question } from './Question.entity';
 
 
 @Entity('jobs')
@@ -8,7 +11,10 @@ export class Job extends BaseModel {
   @Column({ nullable: true })
   name: string;
 
+  @Column('datetime', { nullable: true })
+  lastUploadCandidatesDate: Date;
 
+  // ------ Scores ------
   @Column({ nullable: true })
   totalScore: number;
 
@@ -24,7 +30,7 @@ export class Job extends BaseModel {
   @Column({ nullable: true })
   culturalScore: number;
 
-
+// ------ Weights ------
   @Column({ nullable: true })
   weightBasic: number;
 
@@ -36,7 +42,7 @@ export class Job extends BaseModel {
   @Column({ nullable: true })
   weightCultural: number;
 
-
+// ------ Matches ------
   @Column({ nullable: true })
   matchesExcellent: number;
 
@@ -48,7 +54,7 @@ export class Job extends BaseModel {
   @Column({ nullable: true })
   matchesPoor: number;
 
-
+// ------ Like/Dislike ------
   @Column({ nullable: true })
   numberFavorites: number;
 
@@ -56,7 +62,7 @@ export class Job extends BaseModel {
   @Column({ nullable: true })
   numberRejected: number;
 
-
+// ------ State ------
   @Column({ default: true })
   active: boolean;
 
@@ -64,11 +70,14 @@ export class Job extends BaseModel {
   @Column({ default: false })
   archive: boolean;
 
-  @Index()
-  @Column({ nullable: true })
-  customer: number;
+// ------ Relation ------
+  @ManyToOne(type => Customer, customer => customer.jobs)
+  customer: Customer;
 
-  @Column('datetime', { nullable: true })
-  lastUploadCandidatesDate: Date;
+  @OneToMany(type => Question, question => question.job)
+  questions: Promise<Question[]>;
+
+  @OneToMany(type => CandidateResponse, cr => cr.job)
+  candidateResponses: Promise<CandidateResponse[]>;
 
 }

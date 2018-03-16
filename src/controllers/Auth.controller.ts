@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import * as passport from 'passport';
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
-import { Body, JsonController, Post } from 'routing-controllers';
+import { Action, Body, JsonController, Post } from 'routing-controllers';
 import { messages } from '../managers';
 import { User } from '../models';
 import { UserService } from '../services';
@@ -27,6 +27,16 @@ export function setUpPassport() {
       done(e);
     }
   }));
+}
+
+export function authorizationChecker(action: Action, roles: string[]): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    passport.authenticate('jwt', (error, user, info) => {
+      if (error || !user) return resolve(false);
+      action.request.user = user;
+      return resolve(true);
+    })(action.request, action.response, action.next);
+  });
 }
 
 @JsonController('/auth')

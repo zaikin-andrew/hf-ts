@@ -1,6 +1,6 @@
 export * from './model.base';
 export * from './User.entity';
-export * from './Addresse.entity';
+export * from './Address.entity';
 export * from './CandidateResponse.entity';
 export * from './Customer.entity';
 export * from './Job.entity';
@@ -11,3 +11,4 @@ export * from './Question.entity';
 export * from './Rating.entity';
 export * from './Response.entity';
 export * from './Score.entity';
+export * from './Contact.entity';

@@ -1,4 +1,5 @@
-import { Column, Entity, Index, } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, } from 'typeorm';
+import { Customer } from './Customer.entity';
 import { BaseModel } from './model.base';
 
 
@@ -20,11 +21,7 @@ export class Address extends BaseModel {
   @Column({ nullable: true })
   postCode: string;
 
-  @Index()
-  @Column({
-    nullable: true,
-    unique: true,
-  })
-  customer: number;
+  @ManyToOne(type => Customer, customer => customer.address)
+  customer: Customer;
 
 }

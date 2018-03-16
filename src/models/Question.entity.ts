@@ -1,5 +1,7 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Job } from './Job.entity';
 import { BaseModel } from './model.base';
+import { Option } from './Option.entity';
 
 export enum Categories {
   basic    = 'basic',
@@ -22,11 +24,6 @@ export class Question extends BaseModel {
   @Column({ nullable: true })
   type: string;
 
-  @Index()
-  @Column({ nullable: true })
-  job: number;
-
-
   @Column({ nullable: true })
   text: string;
 
@@ -34,4 +31,9 @@ export class Question extends BaseModel {
   @Column('enum', { nullable: true, enum: Categories })
   category: string;
 
+  @ManyToOne(type => Job, d => d.questions)
+  job: Promise<Job>;
+
+  @OneToMany(type => Option, d => d.question)
+  options: Option[];
 }

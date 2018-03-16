@@ -1,4 +1,5 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { CandidateResponse } from './CandidateResponse.entity';
 import { BaseModel } from './model.base';
 
 
@@ -42,8 +43,8 @@ export class Score extends BaseModel {
   })
   culturalPercent: number;
 
-  @Index({ unique: true })
-  @Column({ nullable: true })
-  candidateResponse: number;
+  @OneToOne(type => CandidateResponse)
+  @JoinColumn()
+  candidateResponse: CandidateResponse;
 
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, ManyToOne } from 'typeorm';
+import { Customer } from './Customer.entity';
 import { BaseModel } from './model.base';
 
 
@@ -11,8 +12,7 @@ export class Contact extends BaseModel {
   @Column({ nullable: true })
   website: string;
 
-  @Index()
-  @Column({ nullable: true, unique: true })
-  customer: number;
+  @ManyToOne(type => Customer, customer => customer.contact)
+  customer: Customer;
 
 }

@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { BaseModel } from './model.base';
+import { Question } from './Question.entity';
 
 
 @Entity('options')
@@ -17,7 +18,7 @@ export class Option extends BaseModel {
   score: number;
 
 
-  @Column({ nullable: true })
-  question: number;
+  @ManyToOne(type => Question, d => d.options)
+  question: Question;
 
 }
