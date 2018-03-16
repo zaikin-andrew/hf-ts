@@ -1,5 +1,5 @@
-import * as bcrypt from 'bcrypt';
-import { Index, Entity, Column } from 'typeorm';
+import * as bcrypt from 'bcrypt-nodejs';
+import { Index, Entity, Column, BeforeInsert } from 'typeorm';
 import { BaseModel } from './model.base';
 
 export enum UserTypes {
@@ -36,6 +36,13 @@ export class User extends BaseModel {
   @Column()
   customer: number;
 
+  @BeforeInsert()
+  hashPassword() {
+    if (this.password) {
+      this.password = bcrypt.hashSync(this.password);
+    }
+  }
+
   get safe() {
     return {
       id: this.id,
@@ -51,9 +58,5 @@ export class User extends BaseModel {
     return bcrypt.compareSync(password, this.password);
   }
 
-  hashPassword() {
-    if (this.password) {
-      this.password = bcrypt.hashSync(this.password);
-    }
-  }
+
 }

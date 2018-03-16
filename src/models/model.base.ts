@@ -2,6 +2,13 @@ import { BaseEntity, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn,
 
 export class BaseModel extends BaseEntity {
 
+  constructor(obj = {}) {
+    super();
+    for (const field in obj) {
+      this[field] = obj[field];
+    }
+  }
+
   @PrimaryGeneratedColumn()
   id: number;
 

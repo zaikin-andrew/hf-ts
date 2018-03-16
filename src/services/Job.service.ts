@@ -1,4 +1,5 @@
 import { Service } from 'typedi';
+import { messages } from '../managers';
 import { Job } from '../models';
 import { BaseService } from './service.base';
 

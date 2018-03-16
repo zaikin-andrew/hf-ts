@@ -7,9 +7,5 @@ export class JobController {
   constructor(private readonly jobService: JobService) {
   }
 
-  @Get()
-  async find() {
-    return this.jobService.find();
-  }
 
 }

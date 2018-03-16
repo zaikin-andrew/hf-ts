@@ -6,10 +6,6 @@ export class BaseService {
   constructor() {
   }
 
-  async find(options = {}) {
-    return this.model.find(options);
-  }
-
   async findById(id: number) {
     return this.model.findOneById(id);
   }
